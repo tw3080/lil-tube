@@ -17,16 +17,19 @@ function getRequest(searchTerm) {
   url = 'https://www.googleapis.com/youtube/v3/search';
 
   $.getJSON(url, params, function(data) {
-    showResults(data.Search);
+    console.log(data);
+    showResults(data.items);
   });
 }
 
 // Show search results
 function showResults(results) {
+  console.log(results);
   var html = '';
   $.each(results, function(index, value) {
-    html += '<p>' + value.Title + '</p>';
-    console.log(value.Title);
+    html += '<p>' + value.snippet.title +
+    '<br>' + '<a href="http://www.youtube.com/watch?v=' + value.id.videoId + '"><img src="' + value.snippet.thumbnails.medium.url + '"></a>' + '</p>';
+    console.log(value.snippet.title);
   });
   $('#search-results').html(html);
 }
